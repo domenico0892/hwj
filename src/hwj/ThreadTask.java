@@ -7,13 +7,11 @@ import java.util.concurrent.ExecutorService;
 public class ThreadTask implements Callable<Integer> {
 
 	private Queue<Node> buffer;
-	private FakeProcessor fp;
 	private ExecutorService es;
 	private Adder adder;
 	
-	public ThreadTask (Queue<Node> b, FakeProcessor fp, ExecutorService es, Adder a) {
+	public ThreadTask (Queue<Node> b, ExecutorService es, Adder a) {
 		this.buffer = b;
-		this.fp = fp;
 		this.es = es;
 		this.adder = a;
 	}
@@ -24,15 +22,16 @@ public class ThreadTask implements Callable<Integer> {
 		//System.out.println("Visiting "+n.getValue());
 		if (n.getDx() != null) {
 			this.buffer.offer(n.getDx());
-			es.submit(new ThreadTask(this.buffer, this.fp, this.es, this.adder));
+			es.submit(new ThreadTask(this.buffer, this.es, this.adder));
 		}
 		if (n.getSx() != null) {
 			this.buffer.offer(n.getSx());
-			es.submit(new ThreadTask(this.buffer, this.fp, this.es, this.adder));
+			es.submit(new ThreadTask(this.buffer, this.es, this.adder));
 		}
 		if (n.getDx() == null && n.getSx() == null && this.buffer.isEmpty())
 			this.es.shutdown();
-		Integer i = this.fp.onerousFunction(n.getValue());
+		FakeProcessor f = new FakeProcessor(10000);
+		Integer i = f.onerousFunction(n.getValue());
 		//System.out.println("Value computed for "+n.getValue()+": "+i);
 		this.adder.add(i);
 		return i;
