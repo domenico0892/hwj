@@ -21,7 +21,7 @@ public class ThreadTask implements Callable<Integer> {
 	@Override
 	public Integer call() throws Exception {
 		Node n = this.buffer.poll();
-		System.out.println("Visiting "+n.getValue());
+		//System.out.println("Visiting "+n.getValue());
 		if (n.getDx() != null) {
 			this.buffer.offer(n.getDx());
 			es.submit(new ThreadTask(this.buffer, this.fp, this.es, this.adder));
@@ -30,8 +30,10 @@ public class ThreadTask implements Callable<Integer> {
 			this.buffer.offer(n.getSx());
 			es.submit(new ThreadTask(this.buffer, this.fp, this.es, this.adder));
 		}
+		if (n.getDx() == null && n.getSx() == null && this.buffer.isEmpty())
+			this.es.shutdown();
 		Integer i = this.fp.onerousFunction(n.getValue());
-		System.out.println("Value computed for "+n.getValue()+": "+i);
+		//System.out.println("Value computed for "+n.getValue()+": "+i);
 		this.adder.add(i);
 		return i;
 	}

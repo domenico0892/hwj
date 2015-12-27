@@ -26,13 +26,11 @@ public class DomandaUno implements BinaryTreeAdder {
 		ThreadTask t = new ThreadTask (this.buffer, this.fp, this.es, this.adder);
 		this.es.submit(t);
 		try {
-			this.es.awaitTermination(10, TimeUnit.SECONDS);
-			System.out.println("Terminated? "+this.es.isTerminated());
+			this.es.awaitTermination(1, TimeUnit.DAYS);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.es.shutdown();
 		return this.adder.getSum();
 	}	
 
