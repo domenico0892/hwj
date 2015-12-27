@@ -1,5 +1,7 @@
 package hwj;
 
+import hwj.hwj1.AdderImplUno;
+
 public class Main {
 	
 	public static void main (String[] args) {
@@ -10,7 +12,7 @@ public class Main {
 		Node root = createBinaryTree(20);
 		System.out.println("Prova 1 thread");
 		start = System.nanoTime();
-		DomandaUno d1 = new DomandaUno(1, 10000);
+		AdderImplUno d1 = new AdderImplUno(1, 10000);
 		Integer sum1 = d1.computeOnerousSum(root);
 		end = System.nanoTime();
 		duration1 = (double)(end-start)/1000000;
@@ -18,7 +20,7 @@ public class Main {
 		System.out.println("Duration1: "+duration1+" ms");
 		System.out.println("Prova "+Runtime.getRuntime().availableProcessors()+" thread");
 		start = System.nanoTime();
-		DomandaUno d2 = new DomandaUno(Runtime.getRuntime().availableProcessors(), 10000);
+		AdderImplUno d2 = new AdderImplUno(Runtime.getRuntime().availableProcessors(), 10000);
 		Integer sumN = d2.computeOnerousSum(root);
 		end = System.nanoTime();
 		durationN = (double)(end-start)/1000000;

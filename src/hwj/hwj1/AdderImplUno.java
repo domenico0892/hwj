@@ -1,4 +1,4 @@
-package hwj;
+package hwj.hwj1;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -6,13 +6,17 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class DomandaUno implements BinaryTreeAdder {
+import hwj.Adder;
+import hwj.BinaryTreeAdder;
+import hwj.Node;
+
+public class AdderImplUno implements BinaryTreeAdder {
 
 	private ExecutorService es;
 	private Queue<Node> buffer;
 	private Adder adder;
 
-	public DomandaUno (int n, int fp) {
+	public AdderImplUno (int n, int fp) {
 		this.es = Executors.newFixedThreadPool(n);
 		this.buffer = new ConcurrentLinkedQueue<Node>();
 		this.adder = new Adder(0);
