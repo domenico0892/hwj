@@ -4,33 +4,39 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 public class DomandaUno implements BinaryTreeAdder {
 
 	private ExecutorService es;
 	private Queue<Node> buffer;
-	
-	public DomandaUno (int n) {
+	private Adder adder;
+	private FakeProcessor fp;
+
+	public DomandaUno (int n, int fp) {
 		this.es = Executors.newFixedThreadPool(n);
 		this.buffer = new ConcurrentLinkedQueue<Node>();
-	}
-	
-	@Override
-	public int computeOnerousSum(Node root) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-	private void buildQueue(Node root) {
-		this.buffer.offer(root);
-		Future<?> f = this.es.submit(
-				new Runnable() {
-					public void run () {
-						Node n = this.buffer.poll();
-					}
-				}
-				
+		this.adder = new Adder(0);
+		this.fp = new FakeProcessor(fp);
 	}
 
+	@Override
+	public int computeOnerousSum(Node root) {
+		this.buffer.offer(root);
+		ThreadTask t = new ThreadTask (this.buffer, this.fp, this.es, this.adder);
+		this.es.submit(t);
+		try {
+			this.es.awaitTermination(10, TimeUnit.SECONDS);
+			System.out.println("Terminated? "+this.es.isTerminated());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.es.shutdown();
+		return this.adder.getSum();
+	}	
+
+	public Queue<Node> getBuffer () {
+		return this.buffer;
+	}
 }
