@@ -4,7 +4,6 @@ import java.util.Queue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
-import hwj.Adder;
 import hwj.FakeProcessor;
 import hwj.Node;
 

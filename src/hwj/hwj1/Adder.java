@@ -1,4 +1,4 @@
-package hwj;
+package hwj.hwj1;
 
 public class Adder {
 	

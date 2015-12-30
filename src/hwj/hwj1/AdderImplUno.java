@@ -6,7 +6,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import hwj.Adder;
 import hwj.BinaryTreeAdder;
 import hwj.Node;
 
@@ -16,7 +15,7 @@ public class AdderImplUno implements BinaryTreeAdder {
 	private Queue<Node> buffer;
 	private Adder adder;
 
-	public AdderImplUno (int n, int fp) {
+	public AdderImplUno (int n) {
 		this.es = Executors.newFixedThreadPool(n);
 		this.buffer = new ConcurrentLinkedQueue<Node>();
 		this.adder = new Adder(0);
