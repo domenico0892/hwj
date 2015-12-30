@@ -15,8 +15,8 @@ public class AdderImplUno implements BinaryTreeAdder {
 	private Queue<Node> buffer;
 	private Adder adder;
 
-	public AdderImplUno (int n) {
-		this.es = Executors.newFixedThreadPool(n);
+	public AdderImplUno () {
+		this.es = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 		this.buffer = new ConcurrentLinkedQueue<Node>();
 		this.adder = new Adder(0);
 	}
@@ -27,7 +27,7 @@ public class AdderImplUno implements BinaryTreeAdder {
 		ThreadTask t = new ThreadTask (this.buffer, this.es, this.adder);
 		this.es.submit(t);
 		try {
-			System.out.println(this.es.awaitTermination(5, TimeUnit.MINUTES));
+			this.es.awaitTermination(1, TimeUnit.HOURS);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
