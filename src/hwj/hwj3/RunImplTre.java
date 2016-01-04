@@ -15,8 +15,8 @@ public class RunImplTre extends RunImpl {
 		System.out.println("RunImplTre...");
 		start = System.nanoTime();
 		AdderImplTre d1 = new AdderImplTre();
-		@SuppressWarnings("unused")
-		Integer sum1 = d1.computeOnerousSum(this.n);
+		Integer sum = d1.computeOnerousSum(this.n);
+		System.out.println("Somma RunImpTre: "+sum);
 		end = System.nanoTime();
 		return end-start;
 	}
