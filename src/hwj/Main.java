@@ -6,9 +6,21 @@ import hwj.hwj3.RunImplTre;
 
 public class Main {
 
+	static final int altezza = 20;
+	
 	public static void main (String[] args) {
 		long start,end,dur0,dur1,dur2,dur3;
-		Node n = createCompleteBinaryTree(20);
+		Node n = createCompleteBinaryTree(altezza);
+		/* Ottimizzazione */
+		Node serv = createCompleteBinaryTree(10);
+		RunImpl prova = new RunImplUno(serv);
+		System.out.println("Ottimizzazione...");
+		prova.run();
+		prova.run();
+		prova.run();
+		/* Avvio delle implementazioni */
+		System.out.println("\nNumero processori (speedup max): "+Runtime.getRuntime().availableProcessors());
+		System.out.println("Altezza albero: "+ altezza);
 		start = System.nanoTime();
 		System.out.println("SimpleSumTree...");
 		Integer sum = simpleSumTree(n);

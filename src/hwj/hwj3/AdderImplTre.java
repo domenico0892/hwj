@@ -8,7 +8,6 @@ import hwj.Node;
 public class AdderImplTre implements BinaryTreeAdder{
 	
 	private ForkJoinPool f;
-	static final int SEQUENTIAL_THRESHOLD = 5000;
 	
 	public AdderImplTre () {
 		this.f = new ForkJoinPool();
@@ -16,7 +15,7 @@ public class AdderImplTre implements BinaryTreeAdder{
 
 	@Override
 	public int computeOnerousSum(Node root) {
-		return this.f.invoke(new AdderTask(root));
+		return this.f.invoke(new AdderTask(root,0));
 	}
 	
 }
